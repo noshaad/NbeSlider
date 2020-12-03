@@ -1,0 +1,230 @@
+<html>
+
+<head>
+
+	<title>
+		Slider
+	</title>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	
+	</script>
+
+</head>
+            <div class="nbe-slider-fade">
+                        <div class="items">
+                            <div class="item">
+                                <p>
+                                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an 
+                                    eggs, endometriosis, fallopian tub disorder, hormonal imbalances... and today many of them are enjoying a new life as a mom
+                                </p>
+                            </div>
+                            <div class="item">
+                               <p>
+                                   Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an 
+                                </p>
+                            </div>
+                            <div class="item">
+                              <p>
+                                    ng Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.
+									Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+
+	<hr />
+	<br />
+	<h1>Documention </h1>
+	<h3><b>how to use it?</b></h3>
+		<p><b>first you need jquery</b><br/>
+		add it wherever you want the only important thing is that it must first add before NbeSlider codes</p>
+		
+		<p><b>then add NbeSlider codes</b><br/>
+		it is here at the bottom of the page</p>
+
+		<p><b>then you need to create your elements in htmls</b><br/>
+		like above or must i say like this(you can replace any thing instead of 1 2 3 numbers)</p>
+		<pre style="background:lightgray">
+&lt;div class="belahbelah"&gt;
+  &lt;div class="items"&gt;
+   &lt;div class="item"&gt;1&lt;/div&gt;
+   &lt;div class="item"&gt;2&lt;/div&gt;
+   &lt;div class="item"&gt;3&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;	</pre>
+
+	<p><b>then call NbeSlider on that tags </b><br/>
+		like this:</p>
+	<pre style="background:lightgray">
+$(document).ready(function () {
+ const slider = new NbeSlider('.belahbelah');
+})</pre>
+
+
+	<p>it's done it will create a slider with fadein fade out options of items and navigations you can style them easily no need to remove any thing</p><br/>
+	<p> avalable options:</p>
+	<p>
+	<b>type:</b><br>
+		
+	
+	</p>
+	
+</body>
+
+<script>
+
+   class NbeSlider{
+            constructor(elem,option) {
+
+                this.el = elem;
+                this.type=option.type?option.type:"fade";
+                this.nav = option.nav?option.nav:true;
+                this.items=0;
+                this.animationTime = option.time?option.time:400;
+                this.currentItem=option.start?option.start:0;
+                this.initiate();
+
+            }
+            get currentItem(){
+                return this._currentItem;
+            }
+            get animationTime(){
+                return this._animationTime;
+            }
+            set animationTime(x){
+              this._animationTime=x;
+            }
+            get type(){
+                return this._type;
+            }
+
+            set type(x){
+              this._type=x;
+            }
+            set currentItem(x){
+                var self=this;
+                if(this.type === "fade"){
+                    if(this.currentItem != x){
+                        let current = this.currentItem;
+                        $(this.el +" .item").eq(current).fadeTo(self.animationTime,0);
+                        setTimeout(()=>{
+                            $(this.el +" .item").eq(current).hide()
+                            $(this.el +" .item").eq(x).show()
+                            $(this.el +" .item").eq(x).fadeTo(self.animationTime,1);
+                        },self.animationTime)
+                    }
+                }
+
+
+                this._currentItem=x;
+            }
+            get items(){
+                return this._items;
+            }
+            set items(x){
+                this._items=x;
+            }
+            initiate(){
+                var self = this;
+                this.items = $(this.el +" .item").length;
+                $(this.el +" .item").hide();
+                if(this.type==="fade"){
+                    $(this.el +" .item").css("opacity",0);
+                    $(this.el +" .item").eq(self.currentItem).css("opacity",1);
+                }
+                $(this.el +" .item").eq(self.currentItem).show();
+                this.navigation()
+            }
+            next(){
+                var self = this;
+                if(this.items !== this.currentItem+1 && this.items > this.currentItem+1){
+                    var curr =this.currentItem;
+                    this.currentItem =curr+1;
+                }
+            }
+            prev(){
+                if(this.currentItem >= 0){
+                    var curr =this.currentItem;
+                    this.currentItem =curr-1;
+                }
+            }
+            navigation(){
+                var self = this;
+                if(this.nav){
+                    var elemt = $(this.el);
+                    let natvigations =`
+                    <div class="nav-container">
+                            <svg class="nbe-prev" version="1.1" width="33" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+                                 xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                 viewBox="-289 380 33 33" style="enable-background:new -289 380 33 33;"
+                                 xml:space="preserve">
+                                <g id="Group_20359" transform="translate(-799.38 -4418)">
+                                    <path id="Rectangle_4786" style="fill:#1098D6;" d="M526.9,4831L526.9,4831c-9.1,0-16.5-7.4-16.5-16.5l0,0
+                                c0-9.1,7.4-16.5,16.5-16.5l0,0c9.1,0,16.5,7.4,16.5,16.5l0,0C543.4,4823.6,536,4831,526.9,4831z"/>
+                                    <g id="arrow-down-sign-to-navigate" transform="translate(819.066 4430) rotate(90)">
+                                        <path id="Path_10" style="fill:#FFFFFF;" d="M384,295.4c0.2,0,0.4-0.1,0.5-0.2l4.3-4.3c0.3-0.3,0.3-0.7,0-1c-0.3-0.3-0.7-0.3-1,0
+                                l-3.8,3.8l-3.8-3.8c-0.3-0.3-0.7-0.3-1,0s-0.3,0.7,0,1l4.3,4.3C383.6,295.3,383.8,295.4,384,295.4z"/>
+                                    </g>
+                                </g>
+                            </svg>
+
+                            <svg class="nbe-next" width="33" xmlns="http://www.w3.org/2000/svg" height="33" viewBox="0 0 33 33">
+                                <g id="Group_20359" data-name="Group 20359" transform="translate(-799.38 -4418)">
+                                    <rect id="Rectangle_4786" data-name="Rectangle 4786" width="33" height="33" rx="16.5" transform="translate(799.38 4418)" fill="#1098d6"/>
+                                    <g id="arrow-down-sign-to-navigate" transform="translate(819.066 4430) rotate(90)">
+                                        <path id="Path_10" data-name="Path 10" d="M5,0a.7.7,0,0,0-.5.2L.205,4.5a.7.7,0,0,0,.99.99L5,1.691,8.8,5.5a.7.7,0,0,0,.99-.99L5.495.2A.7.7,0,0,0,5,0Z" transform="translate(0)" fill="#fff"/>
+                                    </g>
+                                </g>
+                            </svg>
+                        </div>
+                    `;
+					
+                    elemt.prepend(natvigations);
+                    if(self.currentItem+1==self.items){
+                        $(".nbe-next").css({"opacity":0.9,"cursor":"auto"})
+                    }else{
+                        $(".nbe-next").css({"opacity":1,"cursor":"pointer"})
+                    }
+                    if(self.currentItem===0){
+                        $(".nbe-prev").css({"opacity":"0.3","cursor":"auto"})
+                    }else{
+                        $(".nbe-prev").css({"opacity":1,"cursor":"pointer"})
+                    }
+                    $(".nbe-next").click(function(){
+                        self.next();
+                        self.checkNavBtns()
+                    });
+                    $(".nbe-prev").click(function(){
+                        self.prev();
+                       self.checkNavBtns()
+                    })
+                }
+            }
+
+            checkNavBtns(){
+                var self = this;
+                if(this.nav){
+                    if(self.currentItem+1==self.items){
+                        $(".nbe-next").css({"opacity":"0.3","cursor":"auto"})
+                    }else{
+                        $(".nbe-next").css({"opacity":1,"cursor":"pointer"})
+                    }
+                    if(self.currentItem===0){
+                        $(".nbe-prev").css({"opacity":"0.3","cursor":"auto"})
+                    }else{
+                        $(".nbe-prev").css({"opacity":1,"cursor":"pointer"})
+                    }
+                }
+            }
+        }
+
+	$(document).ready(function () {
+	 const slider = new NbeSlider('.nbe-slider-fade',{
+                type:"fade",
+            });
+	})
+</script>
+
+</html>
