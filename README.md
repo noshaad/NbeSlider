@@ -1,5 +1,5 @@
 # NbeSlider
-<p>just a simple slider for my self to use in my projects</p>
+<p>just a simple slider</p>
 	<h3><b>how to use it?</b></h3>
 		<p><b>first you need jquery</b><br/>
 		add it wherever you want the only important thing is that it must first add before NbeSlider codes</p>	
