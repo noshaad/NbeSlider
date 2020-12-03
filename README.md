@@ -1,5 +1,5 @@
 # NbeSlider
-just a simple slider for my self to use in my projects
+<p>just a simple slider for my self to use in my projects</p>
 
 
 	<h1>Documention </h1>
