@@ -123,11 +123,11 @@
             }
             prev(){
                 var self = this;
-                console.log(self.isFirstItem());
+                
                 if(this.loop){
                     var curr =this.currentItem;
                     if(self.isFirstItem()){
-                        this.currentItem =self.items;
+                        this.currentItem =self.items - 1;
                     }else{
                         this.currentItem =curr-1;
                     }
@@ -200,7 +200,7 @@
             }
             
             isFirstItem(){
-                if(this.currentItem === 1){
+                if(this.currentItem <= 0){
                     return true;
                 }else{
                     return false;
