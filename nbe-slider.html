@@ -9,7 +9,22 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	
 	</script>
-
+<style>
+.nbe-dote {
+    background: red;
+    width: 10px;
+    height: 10px;
+    display: flex;
+    border-radius: 100%;
+}
+.nbe-dote.active{
+    border:2px solid black;
+}
+.nbe-bullets {
+    display: flex;
+    justify-content: center;
+}
+</style>
 </head>
             <div class="nbe-slider-fade">
                         <div class="items">
@@ -47,11 +62,18 @@
 
    class NbeSlider{
             constructor(elem,option) {
-
+                console.log()
                 this.el = elem;
                 this.type=option.type?option.type:"fade";
-                this.nav = option.nav?option.nav:true;
+                if(option.nav!=undefined){
+                    this.nav=option.nav
+                }else{
+                    this.nav = true;
+                }
+                
                 this.loop = option.loop?option.loop:false;
+                this.drag=(option.drag==true)?true:false;
+                this.bullet = (option.bullet==true)?true:false;
                 this.items=0;
                 this.animationTime = option.time?option.time:400;
                 this.currentItem=option.start?option.start:0;
@@ -87,8 +109,6 @@
                         },self.animationTime)
                     }
                 }
-
-
                 this._currentItem=x;
             }
             get items(){
@@ -108,6 +128,20 @@
                 }
                 $(this.el +" .item").eq(self.currentItem).show();
                 this.navigation()
+                if(self.drag){
+                    $(this.el +" .items").css({
+                                    'cursor':"grab",
+                                    "-webkit-touch-callout":"none",
+                                    "-webkit-user-select":"none",
+                                    "-khtml-user-select":"none",
+                                    "-ms-user-select":"none",
+                                    "user-select":"none",
+                                })
+                    self.dragSlide();
+                }
+                if(self.bullet){
+                    self.dotteCreation();
+                }
             }
             next(){
                 var self = this;
@@ -191,6 +225,45 @@
                     })
                 }
             }
+            dragSlide(){
+                var self = this;
+                $(self.el + ' .items').on('mousedown', function(e) {
+                        $(this).data('p0', { x: e.pageX, y: e.pageY });
+                        $(this).css("cursor","grabbing");
+                    }).on('mouseup', function(e) {
+                        var p0 = $(this).data('p0'),
+                            p1 = { x: e.pageX, y: e.pageY },
+                            d = Math.sqrt(Math.pow(p1.x - p0.x, 2) + Math.pow(p1.y - p0.y, 2));
+                          
+                                $(this).css("cursor","grab");
+                    if(p0.x > p1.x ){
+                        self.next()
+                        self.checkNavBtns()
+                    }else{
+                        self.prev();
+                       self.checkNavBtns()
+                    }
+                        // if (d < 4) {
+                        //     alert('clicked');
+                        // }
+                    })
+            }
+            dotteCreation(){
+                var self = this;
+           
+                $(self.el).append("<div class='nbe-bullets'></div>");
+                for(var i = 0 ;i<self.items;i++){
+                    console.count()
+                    $(self.el + " .nbe-bullets" ).append(`<span data-item="${i}" class="nbe-dote"></span>`);
+                }
+                $(self.el + " .nbe-dote[data-item="+self.currentItem +"]").addClass('active');
+                $(self.el + " .nbe-dote").click(function(){
+                    $(self.el + " .nbe-dote").removeClass('active');
+                    $(this).addClass('active');
+                    let item = $(this).data('item');
+                    self.currentItem=item;
+                })
+            }
             isLastItem(){
                 if(this.currentItem === this.items - 1 ){
                     return true;
@@ -222,6 +295,8 @@
                         }
                     }
                 }
+                $(self.el + " .nbe-dote").removeClass('active');
+                $(self.el + " .nbe-dote[data-item="+self.currentItem +"]").addClass('active');
             }
         }
 
@@ -229,6 +304,9 @@
 	 const slider = new NbeSlider('.nbe-slider-fade',{
                 type:"fade",
                 loop:true,
+                drag:true,
+                bullet:true,
+                nav:false
             });
 	})
 </script>
